@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app-development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+      environment: testing
+  template:
+    metadata:
+      labels:
+        app: web-app
+        environment: testing
+    spec:
+      containers:
+        - name: webapi1
+          image: $REPO_IMAGE_1
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "500Mi"
+          ports:
+            - containerPort: 8080
+              name: http
+          command:
+            - sh
+            - -c
+            - dotnet start
+          readinessProbe:
+            httpGet:
+              path: /api/values
+              port: 8080
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/values
+              port: 8080
+            initialDelaySeconds: 70
+            timeoutSeconds: 10
+            failureThreshold: 10
+        # - name: webapi2
+        #   image: $REPO_IMAGE_1
+        #   resources:
+        #     requests:
+        #       cpu: "10m"
+        #       memory: "128Mi"
+        #     limits:
+        #       cpu: "200m"
+        #       memory: "500Mi"
+        #   ports:
+        #     - containerPort: 8081
+        #       name: http
+        #   command:
+        #     - sh
+        #     - -c
+        #     - dotnet start
+        #   readinessProbe:
+        #     httpGet:
+        #       path: /api/values
+        #       port: 8081
+        #     initialDelaySeconds: 60
+        #     timeoutSeconds: 5
+        #   livenessProbe:
+        #     httpGet:
+        #       path: /api/values
+        #       port: 8081
+        #     initialDelaySeconds: 70
+        #     timeoutSeconds: 10
+        #     failureThreshold: 10
