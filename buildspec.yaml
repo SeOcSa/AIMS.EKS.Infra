@@ -22,4 +22,4 @@ phases:
       - echo List directory
       - ls -la
       - echo Push the latest image to cluster
-      - kubectl apply -f deployment.yaml --env="repo-api1-image=$REPO_IMAGE_1,repo-api2-image=$REPO_IMAGE_2"
+      - kubectl apply -f deployment.yaml

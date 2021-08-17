@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: webapi1
-          image: repo-api1-image
+          image: 720488407518.dkr.ecr.eu-central-1.amazonaws.com/aims-eks-demo-repo:latest
           resources:
             requests:
               cpu: "10m"
@@ -45,7 +45,7 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 10
         - name: webapi2
-          image: repo-api2-image
+          image: 720488407518.dkr.ecr.eu-central-1.amazonaws.com/aims-eks-demo-repo-2:latest
           resources:
             requests:
               cpu: "10m"
