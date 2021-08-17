@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: webapi1
-          image: $REPO_IMAGE_1
+          image: repo-api1-image
           resources:
             requests:
               cpu: "10m"
@@ -44,32 +44,32 @@ spec:
             initialDelaySeconds: 70
             timeoutSeconds: 10
             failureThreshold: 10
-        # - name: webapi2
-        #   image: $REPO_IMAGE_1
-        #   resources:
-        #     requests:
-        #       cpu: "10m"
-        #       memory: "128Mi"
-        #     limits:
-        #       cpu: "200m"
-        #       memory: "500Mi"
-        #   ports:
-        #     - containerPort: 8081
-        #       name: http
-        #   command:
-        #     - sh
-        #     - -c
-        #     - dotnet start
-        #   readinessProbe:
-        #     httpGet:
-        #       path: /api/values
-        #       port: 8081
-        #     initialDelaySeconds: 60
-        #     timeoutSeconds: 5
-        #   livenessProbe:
-        #     httpGet:
-        #       path: /api/values
-        #       port: 8081
-        #     initialDelaySeconds: 70
-        #     timeoutSeconds: 10
-        #     failureThreshold: 10
+        - name: webapi2
+          image: repo-api2-image
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "500Mi"
+          ports:
+            - containerPort: 8081
+              name: http
+          command:
+            - sh
+            - -c
+            - dotnet start
+          readinessProbe:
+            httpGet:
+              path: /api/values
+              port: 8081
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/values
+              port: 8081
+            initialDelaySeconds: 70
+            timeoutSeconds: 10
+            failureThreshold: 10
