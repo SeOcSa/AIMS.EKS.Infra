@@ -29,7 +29,10 @@ spec:
               cpu: "200m"
               memory: "500Mi"
           ports:
-            - containerPort: 8081
+            - containerPort: 81
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:81
 ---
 apiVersion: v1
 kind: Service
