@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: weba-app1-service
+  name: web-app1-service
 spec:
   selector:
     app: web-app
@@ -50,7 +50,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: weba-app2-service
+  name: web-app2-service
 spec:
   selector:
     app: web-app
@@ -58,4 +58,38 @@ spec:
     - name: https
       protocol: TCP
       port: 443
-      targetPort: 8081
+      targetPort: 81
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: api1-ingress
+spec:
+    rules:
+    - http:
+        paths:
+        - path: /webappf
+          pathType: Prefix
+          backend:
+            service:
+              name: web-app1-service
+              port:
+                number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: api2-ingress
+spec:
+    rules:
+    - http:
+        paths:
+        - path: /webappf
+          pathType: Prefix
+          backend:
+            service:
+              name: web-app2-service
+              port:
+                number: 81
+--- 
