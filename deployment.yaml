@@ -41,7 +41,7 @@ metadata:
 spec:
   selector:
     app: web-app
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: web-api1
       protocol: TCP
@@ -55,35 +55,35 @@ metadata:
 spec:
   selector:
     app: web-app
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: web-api2
       protocol: TCP
       port: 8081
       targetPort: 81
 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-    name: webapi-ingress
-    namespace: default
-spec:
-    rules:
-    - host: webapi-ingress.aims-eks-demo-cluster.k8s.gigantic.io
-    - http:
-        paths:
-        - path: /api1
-          pathType: Prefix
-          backend:
-            service:
-              name: web-api1-service
-              port:
-                number: 8080
-        - path: /api2
-          pathType: Prefix
-          backend:
-            service:
-              name: web-api2-service
-              port:
-                number: 8081
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#     name: webapi-ingress
+#     namespace: default
+# spec:
+#     rules:
+#     - host: webapi-ingress.aims-eks-demo-cluster.k8s.gigantic.io
+#     - http:
+#         paths:
+#         - path: /api1
+#           pathType: Prefix
+#           backend:
+#             service:
+#               name: web-api1-service
+#               port:
+#                 number: 8080
+#         - path: /api2
+#           pathType: Prefix
+#           backend:
+#             service:
+#               name: web-api2-service
+#               port:
+#                 number: 8081
