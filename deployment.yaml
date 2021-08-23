@@ -61,27 +61,3 @@ spec:
       protocol: TCP
       port: 8081
       targetPort: 81
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-    name: api1-ingress
-spec:
-    rules:
-    - http:
-        paths:
-        - path: /webapp1api
-          pathType: Prefix
-          backend:
-            service:
-              name: web-app1-service
-              port:
-                number: 8080
-        - path: /webapp2api
-          pathType: Prefix
-          backend:
-            service:
-              name: web-app2-service
-              port:
-                number: 8081
