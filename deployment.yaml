@@ -41,6 +41,7 @@ metadata:
 spec:
   selector:
     app: web-app
+  type: LoadBalancer
   ports:
     - name: web-app1
       protocol: TCP
