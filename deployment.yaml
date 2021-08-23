@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-app-development
+  name: web-api1-development
 spec:
   selector:
     matchLabels:
-      app: web-app
+      app: web-api-1
       environment: testing
   template:
     metadata:
       labels:
-        app: web-app
+        app: web-api-1
         environment: testing
     spec:
       containers:
@@ -21,7 +21,54 @@ spec:
               cpu: "200m"
               memory: "500Mi"
           ports:
-            - containerPort: 80
+            - containerPort: 80    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-api1-service
+spec:
+  selector:
+    app: web-api1
+  type: ClusterIP
+  ports:
+    - name: web-api1
+      protocol: TCP
+      port: 8001
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: web-api1-ingress
+spec:
+    rules:
+    - http:
+        paths:
+        - path: /webapi
+          pathType: Prefix
+          backend:
+            service:
+              name: web-api1-service
+              port:
+                number: 8001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-api2-development
+spec:
+  selector:
+    matchLabels:
+      app: web-api2
+      environment: testing
+  template:
+    metadata:
+      labels:
+        app: web-api2
+        environment: testing
+    spec:
+      containers:
         - name: webapi2
           image: 720488407518.dkr.ecr.eu-central-1.amazonaws.com/aims-eks-demo-repo-2:latest
           resources:
@@ -32,32 +79,34 @@ spec:
             - containerPort: 81
           env:
             - name: ASPNETCORE_URLS
-              value: http://+:81
+              value: http://+:81 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-app1-service
+  name: web-api2-service
 spec:
   selector:
-    app: web-app
-  type: LoadBalancer
+    app: web-api2
+  type: ClusterIP
   ports:
-    - name: web-app1
+    - name: web-api2
       protocol: TCP
-      port: 8080
-      targetPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: web-app2-service
-spec:
-  selector:
-    app: web-app
-  type: LoadBalancer
-  ports:
-    - name: web-app2
-      protocol: TCP
-      port: 8081
+      port: 8002
       targetPort: 81
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: web-api2-ingress
+spec:
+    rules:
+    - http:
+        paths:
+        - path: /webappapi
+          pathType: Prefix
+          backend:
+            service:
+              name: web-api2-service
+              port:
+                number: 8002
