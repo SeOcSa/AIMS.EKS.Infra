@@ -69,27 +69,17 @@ spec:
     rules:
     - http:
         paths:
-        - path: /webappf
+        - path: /webapp1api
           pathType: Prefix
           backend:
             service:
               name: web-app1-service
               port:
                 number: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-    name: api2-ingress
-spec:
-    rules:
-    - http:
-        paths:
-        - path: /webappf
+        - path: /webapp2api
           pathType: Prefix
           backend:
             service:
               name: web-app2-service
               port:
                 number: 81
---- 
