@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: webapi1
-          image: 720488407518.dkr.ecr.eu-central-1.amazonaws.com/aims-eks-demo-repo:latest
+          image: 720488407518.dkr.ecr.eu-central-1.amazonaws.com/backend-first-api-repo:latest
           resources:
             limits:
               cpu: "200m"
@@ -23,7 +23,7 @@ spec:
           ports:
             - containerPort: 80
         - name: webapi2
-          image: 720488407518.dkr.ecr.eu-central-1.amazonaws.com/aims-eks-demo-repo-2:latest
+          image: 720488407518.dkr.ecr.eu-central-1.amazonaws.com/backend-second-api-repo:latest
           resources:
             limits:
               cpu: "200m"
@@ -61,7 +61,6 @@ spec:
       protocol: TCP
       port: 8081
       targetPort: 81
-
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
