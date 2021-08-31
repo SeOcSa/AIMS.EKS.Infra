@@ -19,10 +19,9 @@ phases:
       - echo Logging in to Amazon EKS...
       - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $AWS_CLUSTER_NAME
       - response=$(aws eks get-token --cluster-name $AWS_CLUSTER_NAME)
-      - echo Response from eks get-token
-      - echo $response
-      - token=$(jq ."status".token $response)
+      - echo $response > response.json
       - echo Extracting token field
+      - token=$(jq ."status".token response.json)
       - echo $token
       - aws-iam-authenticator token -i $AWS_CLUSTER_NAME -r $CODE_BUILD_ROLE_ARN
   build:
