@@ -1,22 +1,17 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
 data:
   mapRoles: |
+    mapRoles: |
     - groups:
       - system:bootstrappers
       - system:nodes
       rolearn: arn:aws:iam::720488407518:role/NodeInstanceRole
       username: system:node:{{EC2PrivateDNSName}}
-    - rolearn: arn:aws:iam::720488407518:role/codebuild-eks
+    - rolearn: arn:aws:iam::720488407518:role/aims-eks-deploy-codebuild-role
       username: codebuild-eks
       groups:
         - system:masters
-kind: ConfigMap
-metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","data":{"mapRoles":"- groups:\n  - system:bootstrappers\n  - system:nodes\n  rolearn: arn:aws:iam::720488407518:role/NodeInstanceRole\n  username: system:node:{{EC2PrivateDNSName}}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":"2021-08-23T14:30:50Z","name":"aws-auth","namespace":"kube-system","resourceVersion":"5158","uid":"dc5cd672-a462-4cc1-b94e-b5a4a03f9ac6"}}
-  creationTimestamp: "2021-08-23T14:30:50Z"
-  name: aws-auth
-  namespace: kube-system
-  resourceVersion: "5380"
-  uid: dc5cd672-a462-4cc1-b94e-b5a4a03f9ac6
