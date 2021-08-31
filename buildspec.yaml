@@ -23,7 +23,7 @@ phases:
       - echo Extracting token field
       - token=$(jq ."status".token response.json)
       - echo $token
-      - aws-iam-authenticator token -i $AWS_CLUSTER_NAME -r $CODE_BUILD_ROLE_ARN
+      - aws-iam-authenticator $token -i $AWS_CLUSTER_NAME -r $CODE_BUILD_ROLE_ARN
   build:
     commands:
       - echo Entered the build phase...
