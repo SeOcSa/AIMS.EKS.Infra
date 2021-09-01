@@ -18,7 +18,7 @@ phases:
       - echo Entered the pre_build phase...
       - echo Logging in to Amazon EKS...
       - aws eks update-kubeconfig --name $AWS_CLUSTER_NAME --region $AWS_DEFAULT_REGION
-      - aws eks get-token --cluster-name $AWS_CLUSTER_NAME
+      - aws sts get-caller-identity
       - kubectl apply -f aws-auth.yaml
   build:
     commands:
